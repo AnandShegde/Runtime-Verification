@@ -6,7 +6,7 @@
 tree::tree(string preced)
 {
    // if we want precedence / > * > + > - (BODMAS) give "/*+-" as string.
-    root = new node(EMPTY_NODE);
+    root = new node(EMPTY_NODE,types(empty));
     cur = root;
 
     int n_ops = preced.size();
@@ -31,46 +31,82 @@ void tree::change_root(){
     root = cur;
 }
 
-void tree::add_operator(char operater){
+void tree::update_root(node* cur){
+    root = cur;
+}
+
+void tree::add_operator(char operater, types operator_type){
 
     if(cur->value==EMPTY_NODE){
-        cur->value = operater;
-        cur = cur->parent;
-        if(!cur){
-            change_root();
+        if(operator_type == unary){
+            cur->value = operator;
+            node* newnode = new node();
+            newnode->parent = cur;
+            cur->next = newnode;
+            cur = newnode;
+        }
+        else{
+            cur->value = operator;
+            node* newnode = new node();
+            newnode->parent = cur;
+            cur->right = newnode;
+            cur = newnode;
         }
     }
     else{
 
-        if(precedence[operater] > precedence[cur->value]){
-            // make the new operator child of current node
+        while(cur->parent && get_precendence(operator) < get_precendence(cur->value))cur = cur->parent;
+
+        //newnode will be on top
+        if(get_precendence(operator) < get_precendence(cur->value)){
+
+            //this will happen only for binary operator
+            node* newnode = new node(operator, operator_type);
+
+            //updating root as the newnode
+            update_root(newnode);
+
+            cur->parent = newnode;
+            newnode->left = cur;
+            node* newRightnode = new node();
+            newRightnode->parent = newnode;
+            newnode->right = newRightnode;
+            cur = newRightnode;
             
         }
+
         else{
-            // make the new operator, child of current node.
-            // current node will usually have a child.
-            // we have to make it child of the new operator.
-            // and go to the right child of our new operator.
-            // look at example here - https://www.notion.so/Example-8434c5a6a1c14a3cbb34cac2d1d527b9
-            
-            node* newnode = new node(operater);
-            newnode->children = cur->children; // copy children of current node
-            vector<node*> empty_vec;
-            cur->children = empty_vec; // remove children of current node
-            cur->children.push_back(newnode);
-
-
+            node* newnode = new node(operator, operator_type);
+            newnode->left = cur->right;
+            cur->right = newnode;
+            newnode->parent = cur;
+            node* newRightnode = new node();
+            newRightnode->parent = newnode;
+            newnode->right = newRightnode;
+            cur = newRightnode;
         }
-
 
     }
 
 }
 
 void tree::add_operand(char operand){
+    cur->value = operand;
+    cur->type = operands;
 
+    if(!cur->parent){
+        node* newnode = new node();
+        cur->parent = newnode;
+        newnode->left = cur;
+    }
+
+    cur = cur->parent;
 }
 
-void proc_left_bracket();
-void proc_right_bracket();
+void proc_left_bracket(){
+    
+}
+void proc_right_bracket(){
+
+}
     

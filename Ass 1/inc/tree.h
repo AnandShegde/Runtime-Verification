@@ -11,21 +11,28 @@ as the operators can be unary, binary or ternary.
 
 using namespace std;
 
+enum types {unary, binary, operands, empty};
+
 struct node
 {
+    types type
     char value;
-    vector<node*>  children;
+    node *left, *right, *next;
     node* parent;
 
     node(){
+        this->type = empty;
         this->parent = nullptr;
+        this->left = nullptr;
+        this->right = nullptr;
+        this->next = nullptr;
     }
 
-    node(char val){
+    node(char val, types type){
         this->value = val;
         this->parent = nullptr;
-    }
-    
+        this->type = type;
+    }    
 };
 
 
@@ -44,6 +51,7 @@ public:
     void proc_left_bracket();
     void proc_right_bracket();
     void change_root();
+    void update_root(node* newnode);
 };
 
 
