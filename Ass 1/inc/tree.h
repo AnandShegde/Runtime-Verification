@@ -15,7 +15,7 @@ enum types {unary, binary, operands, empty};
 
 struct node
 {
-    types type
+    types type;
     char value;
     node *left, *right, *next;
     node* parent;
