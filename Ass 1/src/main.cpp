@@ -4,20 +4,20 @@
 #include <fstream>
 #include "./../inc/tree.h"
 
-using namespace std;
 
-string getProperty(string fileName){
+std::string get_property(std::string fileName){
 
-    string property;
-    ifstream propertyFile(fileName);
+    std::string property;
+    std::ifstream propertyFile(fileName);
     if(!(getline(propertyFile, property))){
-        cout<<"No property found\n";
+        std::cout<<"No property found\n";
         propertyFile.close();
         return "";
     }
     propertyFile.close();
     return property;
 }
+
 
 
 
@@ -28,15 +28,19 @@ int main(int argc, char *argv[]){
         return -1;
     }
     
-    string property;
-
+    std::string property, expression;
+    tree *root = new tree();
     
+    //reading property from file
+    property = get_property(argv[1]);
+    std::cout<<property<<std::endl;
 
-    property = getProperty(argv[1]);
-     cout<<property<<endl;
-
-    tree tre
-
+    //Constructing parse tree    
+    root->construct_parse_tree(property);
+    
+    expression = root->evaluate(root->root);
+    
+    std::cout<<expression<<std::endl;
 
     return 0;
 }

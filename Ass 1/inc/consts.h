@@ -1,33 +1,13 @@
+#include<string>
+#ifndef CONSTS_HPP
+#define CONSTS_HPP
 const char EMPTY_NODE = '~';
-
-
 enum types {unary, binary, operands, empty};
 
-types get_type(char ch){
-    switch (ch)
-    {
-        case '^':
-        case 'v':
-        case '>':
-            return binary;
+types get_type(char ch);
 
-        case '!':
-            return unary;
+int get_precendence(char ch);
 
-        case '~':
-            return empty;
+std::string get_expression(char ch, std::string left, std::string right);
 
-        default:
-            return operands;
-    }
-}
-
-int get_precendence(char ch){
-    switch (ch)
-    {
-        case '!': return 100;
-        case '^': return 99;
-        case 'v': return 98;
-        case '>': return 97;
-    }
-}
+#endif

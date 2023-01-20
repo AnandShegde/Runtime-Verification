@@ -3,15 +3,13 @@
 
 #include<iostream>
 #include<bits/stdc++.h>
+#include "consts.h"
 
 /* 
 Implements a tree. Each node can have many child nodes 
 as the operators can be unary, binary or ternary.
 */
 
-using namespace std;
-
-enum types {unary, binary, operands, empty};
 
 struct node
 {
@@ -21,7 +19,8 @@ struct node
     node* parent;
 
     node(){
-        this->type = empty;
+        this->value = EMPTY_NODE;
+        this->type = (types)empty;
         this->parent = nullptr;
         this->left = nullptr;
         this->right = nullptr;
@@ -40,18 +39,17 @@ class tree
 {
 private:
     node* cur;
-    unordered_map<char, int> precedence;
+    void add_operator(char opt, types opt_type);
+    void add_operand(char operand);
 public:
     node* root;
-    tree(string preced);
+    tree();
     ~tree();
     void connect(node* parent, node* child);
-    void add_operator(char operater);
-    void add_operand(char operand);
-    void proc_left_bracket();
-    void proc_right_bracket();
     void change_root();
     void update_root(node* newnode);
+    std::string evaluate(node* current);
+    void construct_parse_tree(std::string &property);
 };
 
 
