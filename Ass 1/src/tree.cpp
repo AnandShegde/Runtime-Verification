@@ -144,7 +144,7 @@ std::string tree::evaluate(node* current){
 
     std::string left, right,expresstion;
     if(current->type == (types)operands){
-        return get_expression(current->value, "", "");
+        return "prop_val[\"" +  current->proposition + "\"]";
     }
     
     if((types)current->type == (types) unary){
