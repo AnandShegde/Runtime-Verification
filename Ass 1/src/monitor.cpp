@@ -2,7 +2,7 @@
 #include <fstream>
 #include<unordered_map>
 
-
+bool evaluate(std::unordered_map<std::string, bool>&prop_val);
 //getting index for the propostion
 void get_index(std::unordered_map<int, std::string> &umap, std::string line, std::unordered_map<std::string, bool>&propVal){
     int i = 0, index = 0;
@@ -56,12 +56,16 @@ int main(int argc, char* argv[]){
     
     while(getline(inputFile, line)){
         update_val(u_map, line, prop_val);
-        output = (prop_val["R"])&(prop_val["G"]); // Replace with the expression got from the evaluate parse tree
+        output = evaluate(prop_val); // Replace with the expression got from the evaluate parse tree
         outputString = output ? "1\n" : "0\n";
         outputFile << outputString;
     }
     inputFile.close();
     outputFile.close();
     return 0;
+}
 
+
+bool evaluate(std::unordered_map<std::string, bool>&prop_val){
+	return (!(prop_val["R"]))|(!(prop_val["G"]));
 }

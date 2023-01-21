@@ -21,8 +21,8 @@ std::string get_property(std::string fileName){
 }
 
 void create_monitor_file(std::string expression){
-    std::ofstream monitorOutput("monitor.cpp");
-    std::ifstream monitorTempate("monitor_template.cpp");
+    std::ofstream monitorOutput("src/monitor.cpp");
+    std::ifstream monitorTempate("src/monitor_template.cpp");
     std::string line, monitorString;
     while(getline(monitorTempate,line)){
         monitorString += line + "\n";
@@ -32,6 +32,7 @@ void create_monitor_file(std::string expression){
     monitorString += "bool evaluate(std::unordered_map<std::string, bool>&prop_val){\n\treturn " + expression + ";\n}";
     monitorOutput << monitorString;
     monitorOutput.close();
+    std::cout<<"Created monitor.cpp";
     
     
 }
