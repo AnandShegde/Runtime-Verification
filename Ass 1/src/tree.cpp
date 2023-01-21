@@ -85,9 +85,10 @@ void tree::add_operator(char opt, types opt_type){
 
 }
 
-void tree::add_operand(char operand){
-    cur->value = operand;
+void tree::add_operand(std::string operand){
+    cur->value = ' ';
     cur->type = (types)operands;
+    cur->proposition = operand;
 
     if(!cur->parent){
         node* newnode = new node();
@@ -107,25 +108,25 @@ void tree::add_operand(char operand){
 }
 
 void tree::construct_parse_tree(std::string &property){
-    
-    for(auto character : property){
-        if(get_type(character) == (types)operands){
-            add_operand(character);
+    int i = 0;
+    while (i < property.length()) {
+        if(get_type(property[i]) == (types)operands){
+            std::string value = "";
+            while(i < property.length() &&  get_type(property[i]) == (types)operands)value += property[i++];
+            add_operand(value);
         }
-        
-        else if(get_type(character) == (types)unary ){
-            add_operator(character, (types)unary);
+        else if(get_type(property[i]) == (types)unary ){
+            add_operator(property[i], (types)unary);
+            i++;
         }
-        
-        else if(get_type(character) == (types)binary ){
-            add_operator(character, (types)binary);
+        else if(get_type(property[i]) == (types)binary ){
+            add_operator(property[i], (types)binary);
+            i++;
         }
         else{
             std::cout<<"-----------Invalid character----------\n";
             exit(1);
         }
-        
-
     }
 
     // if only one operand is there without any operator

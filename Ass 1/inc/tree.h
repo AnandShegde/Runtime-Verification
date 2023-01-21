@@ -15,6 +15,7 @@ struct node
 {
     types type;
     char value;
+    std::string proposition;
     node *left, *right, *next;
     node* parent;
 
@@ -25,6 +26,7 @@ struct node
         this->left = nullptr;
         this->right = nullptr;
         this->next = nullptr;
+        this->proposition = "";
     }
 
     node(char val, types type){
@@ -40,7 +42,7 @@ class tree
 private:
     node* cur;
     void add_operator(char opt, types opt_type);
-    void add_operand(char operand);
+    void add_operand(std::string operand);
 public:
     node* root;
     tree();
