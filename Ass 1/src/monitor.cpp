@@ -2,15 +2,16 @@
 #include <fstream>
 #include<unordered_map>
 
+
+//getting index for the propostion
 void get_index(std::unordered_map<int, std::string> &umap, std::string line, std::unordered_map<std::string, bool>&propVal){
     int i = 0, index = 0;
     std::string temp;
     line += ",";
     while(i < line.length()){
         if(line[i] == ','){
-            umap[index] = temp;
+            umap[index++] = temp;
             propVal[temp] = false;
-            index++;
             temp = "";
         }
         else{
@@ -20,6 +21,8 @@ void get_index(std::unordered_map<int, std::string> &umap, std::string line, std
     }
 }
 
+
+//updating the boolean value of the proposition using map
 void update_val(std::unordered_map<int, std::string> &umap, std::string line, std::unordered_map<std::string, bool>&propVal){
     int i = 0, index = 0, val;
     line += ",";
@@ -42,8 +45,9 @@ int main(int argc, char* argv[]){
     }
 
     int output;
-    std::string line;
+    std::string line, outputString;
     std::ifstream inputFile(argv[1]);
+    std::ofstream outputFile(argv[2]);
     std::unordered_map<int, std::string> u_map;
     std::unordered_map<std::string, bool>prop_val;
 
@@ -52,10 +56,12 @@ int main(int argc, char* argv[]){
     
     while(getline(inputFile, line)){
         update_val(u_map, line, prop_val);
-        std::cout<<output<<std::endl;
+        output = (prop_val["R"])&(prop_val["G"]); // Replace with the expression got from the evaluate parse tree
+        outputString = output ? "1\n" : "0\n";
+        outputFile << outputString;
     }
     inputFile.close();
-    
+    outputFile.close();
     return 0;
 
 }
