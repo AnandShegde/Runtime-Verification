@@ -32,8 +32,6 @@ void create_monitor_file(std::string expression){
     monitorString += "bool evaluate(std::unordered_map<std::string, bool>&prop_val){\n\treturn " + expression + ";\n}";
     monitorOutput << monitorString;
     monitorOutput.close();
-    std::cout<<"Created monitor.cpp";
-    
     
 }
 

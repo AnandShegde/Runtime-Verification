@@ -48,7 +48,7 @@ std::string get_expression(char ch, std::string left, std::string right){
     case 'v':
         return "(" + left + ")|(" + right +")";
     case '>':
-        return "(!("+ left+ "))&("+right+")";
+        return "(!("+ left+ "))|("+right+")";
     default:
         std::string ret;
         ret += ch;
