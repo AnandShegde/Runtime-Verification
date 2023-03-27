@@ -10,13 +10,21 @@ types get_type(char ch){
         case 'v':
         case '>':
             return (types)binary;
-
         case '!':
+            return (types)unary;
+            
+        case 'U':
+            return (types)binary;
+        case 'X':
+            return (types)unary;
+
+        case 'G':
+            return (types)unary;
+        case 'F':
             return (types)unary;
 
         case '~':
             return (types)empty;
-
         default:
             return (types)operands;
     }
@@ -25,13 +33,26 @@ types get_type(char ch){
 }
 
 int get_precendence(char ch){
-    switch (ch)
-    {
-        case '!': return 100;
-        case '^': return 99;
-        case 'v': return 98;
-        case '>': return 97;
+
+    std::string prec = "!XFG^v>U";
+    for(int i=0;i<prec.length();i++){
+        if(prec[i]==ch) return 100 - i;
     }
+
+    // switch (ch)
+    // {
+    //     case '!': return 100;
+    //     case 'X': return 99;
+    //     case '^': return 98;
+    //     case 'F': return 92;
+    //     case 'v': return 96;
+    //     case '>': return 95;
+    //     case 'G': return 94;
+    //     case 'H': return 93;
+        
+    //     case 'U': return 91;
+    //     case ''
+    // }
 
     return -1;
 }

@@ -26,6 +26,8 @@ struct node
         this->left = nullptr;
         this->right = nullptr;
         this->next = nullptr;
+
+        //For operators store [t1, t2]
         this->proposition = "";
     }
 
@@ -52,6 +54,7 @@ public:
     void update_root(node* newnode);
     std::string evaluate(node* current);
     void construct_parse_tree(std::string &property);
+    void remove_H_E(std::string &property);
 };
 
 

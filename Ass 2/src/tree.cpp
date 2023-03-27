@@ -107,9 +107,40 @@ void tree::add_operand(std::string operand){
     
 }
 
+void tree::remove_H_E(std::string &property){
+    std::string temp = "";
+
+    for(int i=0;i<property.size();i++){
+        if(property[i] == ' ') continue;
+
+        if(property[i]=='E'||property[i]=='H'){
+            //changing the operator Et -> F[0,t]
+            temp += property[i] == 'H' ? "G[0," : "F[0,";
+            std::string number = "";
+            
+            i++;
+            while(isdigit(property[i])|| property[i]==' '){
+                if(property[i] == ' ') {
+                    i++;
+                    continue;
+                }
+                temp += property[i];
+                i++;
+            } 
+            i--; 
+            temp+= "]";
+        }
+        else{
+            temp += property[i];
+        }
+    }
+    property = temp;
+}
+
 void tree::construct_parse_tree(std::string &property){
     int i = 0;
     while (i < property.length()) {
+
         if(get_type(property[i]) == (types)operands){
             std::string value = "";
             while(i < property.length() &&  get_type(property[i]) == (types)operands)value += property[i++];

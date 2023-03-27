@@ -51,6 +51,9 @@ int main(int argc, char *argv[]){
     property = get_property(argv[1]);
     //std::cout<<property<<std::endl;
 
+    //Preprocessing the input
+    root->remove_H_E(property);
+
     //Constructing parse tree    
     root->construct_parse_tree(property);
     
