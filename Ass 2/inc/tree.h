@@ -25,7 +25,7 @@ struct node
         this->parent = nullptr;
         this->left = nullptr;
         this->right = nullptr;
-        this->next = nullptr;
+        this->next = nullptr;        
 
         //For operators store [t1, t2]
         this->proposition = "";

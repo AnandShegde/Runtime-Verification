@@ -1,8 +1,9 @@
 #include<iostream>
 #include <fstream>
 #include<unordered_map>
+#include<../inc/mtree.h>
 
-bool evaluate(std::unordered_map<std::string, bool>&prop_val);
+std::string get_expression();
 //getting index for the propostion
 void get_index(std::unordered_map<int, std::string> &umap, std::string line, std::unordered_map<std::string, bool>&propVal){
     int i = 0, index = 0;
@@ -37,6 +38,7 @@ void update_val(std::unordered_map<int, std::string> &umap, std::string line, st
     }
 }
 
+
 int main(int argc, char* argv[]){
 
 
@@ -51,15 +53,25 @@ int main(int argc, char* argv[]){
     std::unordered_map<int, std::string> u_map;
     std::unordered_map<std::string, bool>prop_val;
 
+    std::string serialized = get_expression();
+
+    mtree *tree = new mtree();
+
+    tree->root = tree->deserialize(serialized, 0, serialized.length()-1);
+
+    tree->print(tree->root);
+
     getline(inputFile,line);
     get_index(u_map, line, prop_val);
+
+
     
-    while(getline(inputFile, line)){
-        update_val(u_map, line, prop_val);
-        output = evaluate(prop_val); // Replace with the expression got from the evaluate parse tree
-        outputString = output ? "1\n" : "0\n";
-        outputFile << outputString;
-    }
+    // while(getline(inputFile, line)){
+    //     update_val(u_map, line, prop_val);
+    //     output = evaluate(prop_val); // Replace with the expression got from the evaluate parse tree
+    //     outputString = output ? "1\n" : "0\n";
+    //     outputFile << outputString;
+    // }
     inputFile.close();
     outputFile.close();
     return 0;

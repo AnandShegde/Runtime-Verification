@@ -28,8 +28,7 @@ void create_monitor_file(std::string expression){
         monitorString += line + "\n";
     }
     monitorTempate.close();
-
-    monitorString += "bool evaluate(std::unordered_map<std::string, bool>&prop_val){\n\treturn " + expression + ";\n}";
+    monitorString += "std::string get_expression(){\n\treturn \"" + expression + "\";\n}";
     monitorOutput << monitorString;
     monitorOutput.close();
     
