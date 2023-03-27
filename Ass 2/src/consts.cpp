@@ -57,22 +57,26 @@ int get_precendence(char ch){
     return -1;
 }
 
-std::string get_expression(char ch, std::string left, std::string right){
-    switch (ch)
-    {
-    
-    //NOT
-    case '!':
-        return "!("+ left + ")"; 
-    case '^':
-        return "("+left+")&("+right+")";
-    case 'v':
-        return "(" + left + ")|(" + right +")";
-    case '>':
-        return "(!("+ left+ "))|("+right+")";
-    default:
-        std::string ret;
-        ret += ch;
-        return ret;
+std::string get_expression(char ch, std::string time, std::string left, std::string right){
+
+    if(get_type(ch) == (types)unary){
+        return ch + time + "(" + left + ")";
     }
+    else{
+        return "(" + right + ")" + ch  + time + "(" + left + ")";
+    }
+}
+
+std::string get_time(std::string property, int i){
+
+    if(property[i] == 'G' || property[i] == 'F' || property[i] == 'U'){
+        std::string ret_time;
+        i++;
+        do{
+            ret_time += property[i];
+        }while(property[i++] != ']');
+
+        return ret_time;
+    } 
+    return "";
 }

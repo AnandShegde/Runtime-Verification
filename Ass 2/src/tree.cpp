@@ -28,12 +28,13 @@ void tree::update_root(node* cur){
     *root = *cur;
 }
 
-void tree::add_operator(char opt, types opt_type){
+void tree::add_operator(char opt, types opt_type, std::string number){
 
-    if(cur->value==EMPTY_NODE){
+    if(cur->value==EMPTY_NODE){ // No operator seen yet, but left child is operand.
         if(opt_type == (types)unary){
             cur->value = opt;
             cur->type = (types)unary;
+            cur->proposition = number;
             node* newnode = new node();
             newnode->parent = cur;
             cur->next = newnode;
@@ -41,7 +42,8 @@ void tree::add_operator(char opt, types opt_type){
         }
         else{
             cur->value = opt;
-             cur->type = (types)binary;
+            cur->type = (types)binary;
+            cur->proposition = number;
             node* newnode = new node();
             newnode->parent = cur;
             cur->right = newnode;
@@ -57,7 +59,7 @@ void tree::add_operator(char opt, types opt_type){
 
             //this will happen only for binary operator
             node* newnode = new node(opt, opt_type);
-
+            newnode->proposition = number;
             //updating root as the newnode
             root = newnode;
 
@@ -72,6 +74,7 @@ void tree::add_operator(char opt, types opt_type){
 
         else{
             node* newnode = new node(opt, opt_type);
+            newnode->proposition = number;
             newnode->left = cur->right;
             cur->right = newnode;
             newnode->parent = cur;
@@ -147,12 +150,16 @@ void tree::construct_parse_tree(std::string &property){
             add_operand(value);
         }
         else if(get_type(property[i]) == (types)unary ){
-            add_operator(property[i], (types)unary);
-            i++;
+            std::string number = get_time(property,i);
+            // std::cout<<"\n"<<number<<"\n";
+
+            add_operator(property[i], (types)unary, number);
+            i += number.size()+1;
         }
         else if(get_type(property[i]) == (types)binary ){
-            add_operator(property[i], (types)binary);
-            i++;
+            std::string number = get_time(property,i);
+            add_operator(property[i], (types)binary, number);
+            i += number.size()+1;
         }
         else{
             std::cout<<"-----------Invalid character----------\n";
@@ -168,25 +175,24 @@ void tree::construct_parse_tree(std::string &property){
 
 }
 
-    
-std::string tree::evaluate(node* current){
+std::string tree::serialize(node* current){
    
     if(!current) return "";
 
     std::string left, right,expresstion;
     if(current->type == (types)operands){
-        return "prop_val[\"" +  current->proposition + "\"]";
+        return current->proposition;
     }
     
     if((types)current->type == (types) unary){
-        left = evaluate(current->next);
-        return get_expression(current->value, left, "");
+        left = serialize(current->next);
+        return get_expression(current->value, current->proposition,  left, "");
     }
 
     if(current->type == (types) binary ){
-        left = evaluate(current->left);
-        right = evaluate(current->right);
-        return get_expression(current->value, left, right);
+        left = serialize(current->left);
+        right = serialize(current->right);
+        return get_expression(current->value, current->proposition, left, right);
     }
 
     return "";

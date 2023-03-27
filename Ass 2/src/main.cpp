@@ -57,8 +57,9 @@ int main(int argc, char *argv[]){
     //Constructing parse tree    
     root->construct_parse_tree(property);
     
-    expression = root->evaluate(root->root);
-    //std::cout<<expression<<std::endl;
+    
+    expression = root->serialize(root->root);
+    std::cout<<expression<<std::endl;
 
 
     //writing monitor.cpp file

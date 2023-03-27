@@ -43,7 +43,7 @@ class tree
 {
 private:
     node* cur;
-    void add_operator(char opt, types opt_type);
+    void add_operator(char opt, types opt_type, std::string number);
     void add_operand(std::string operand);
 public:
     node* root;
@@ -52,7 +52,7 @@ public:
     void connect(node* parent, node* child);
     void change_root();
     void update_root(node* newnode);
-    std::string evaluate(node* current);
+    std::string serialize(node* current);
     void construct_parse_tree(std::string &property);
     void remove_H_E(std::string &property);
 };

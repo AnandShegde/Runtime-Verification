@@ -8,6 +8,8 @@ types get_type(char ch);
 
 int get_precendence(char ch);
 
-std::string get_expression(char ch, std::string left, std::string right);
+std::string get_expression(char ch, std::string time, std::string left, std::string right);
+
+std::string get_time(std::string property, int i);
 
 #endif

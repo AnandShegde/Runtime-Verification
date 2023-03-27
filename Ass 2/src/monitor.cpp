@@ -67,5 +67,5 @@ int main(int argc, char* argv[]){
 
 
 bool evaluate(std::unordered_map<std::string, bool>&prop_val){
-	return (!((!(prop_val["A"]))|((!(prop_val["B"]))|((prop_val["C"])|((prop_val["D"])|((!(prop_val["D"]))|(!(prop_val["E"]))))))))|(((prop_val["F"])&((!(prop_val["G"]))&(prop_val["G"])))|((prop_val["F"])&((!(prop_val["G"]))&(prop_val["H"]))));
+	return ;
 }
