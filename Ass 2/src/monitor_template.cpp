@@ -59,7 +59,7 @@ int main(int argc, char* argv[]){
 
     tree->root = tree->deserialize(serialized, 0, serialized.length()-1);
 
-    tree->print(tree->root);
+    // tree->print(tree->root);
 
     getline(inputFile,line);
     get_index(u_map, line, prop_val);
