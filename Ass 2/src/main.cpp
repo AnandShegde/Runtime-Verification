@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
     
     
     expression = root->serialize(root->root);
-    std::cout<<expression<<std::endl;
+    // std::cout<<expression<<std::endl;
 
 
     //writing monitor.cpp file
