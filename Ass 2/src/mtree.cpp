@@ -286,24 +286,61 @@ int mtree::process_until(mnode *node)
 // Globally
 int mtree::process_globally(mnode *node)
 {
-    if (node->l1.size() > node->t2)
-    {
-        int verdict = 1;
+    if(node->l1.size() > node->t1){
+        int verdict = 0, index = node->t1;
         auto itr = node->l1.begin();
         std::advance(itr, node->t1);
-
-        for (int i = node->t1; i <= node->t2; i++)
-        {
-            if (!(*itr)){
-                verdict = 0;
+        while(index < node->l1.size() && index <= node->t2){
+            if (*itr){
+                verdict = 1;
                 break;
-            }    
+            }
             itr++;
         }
-        // Removing the front from the queue
-        node->l1.pop_front();
-        return verdict;
+        if(verdict){
+            node->l1.pop_front();
+            return verdict;
+        }
     }
+    
+    if(node->l1.size() > node->t2){
+        node->l1.pop_front();
+        return 0;
+    }
+    return -1;
+
+
+    if(node->l1.size()>node->t1){
+        int verdict = 1;
+        int index = node->t1;
+        auto itr = node->l1.begin();
+        
+        std::advance(itr, node->t1);
+
+        while(index < node->l1.size() && index <= node->t2){
+            if(!(*itr)){
+
+                verdict = 0;
+                break;
+            }
+            itr++;
+            index++;
+        }
+
+        if(!verdict){
+            
+            node->l1.pop_front();
+            return verdict;
+        }
+
+
+    }
+
+    if(node->l1.size() > node->t2){
+        node->l1.pop_front();
+        return 1;
+    }
+
     return -1;
 }
 
@@ -319,6 +356,7 @@ int mtree::process_finally(mnode *node)
                 verdict = 1;
                 break;
             }
+            index++;
             itr++;
         }
         if(verdict){
