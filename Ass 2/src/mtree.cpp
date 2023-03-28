@@ -147,6 +147,8 @@ int mtree::evaluate(std::unordered_map<std::string, bool> prop_val, mnode *node)
 
         return get_value(node);
     }
+
+    return -1;
 }
 
 int mtree::get_value(mnode *node)

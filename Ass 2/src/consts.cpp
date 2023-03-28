@@ -63,7 +63,7 @@ std::string get_expression(char ch, std::string time, std::string left, std::str
         return ch + time + "(" + left + ")";
     }
     else{
-        return "(" + right + ")" + ch  + time + "(" + left + ")";
+        return "(" + left + ")" + ch  + time + "(" + right + ")";
     }
 }
 
