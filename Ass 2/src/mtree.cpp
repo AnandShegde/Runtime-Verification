@@ -245,41 +245,59 @@ int mtree::process_next(mnode *node)
 // UNTIL
 int mtree::process_until(mnode *node)
 {
-
-    if (node->l1.size() > node->t2 && node->l2.size() > node->t2)
-    {
-        int verdict = 1;
+    int qt = -1; // time when q became true between t1 and t2.
+    int verdict = -1;
+    if(node->l2.size() > node->t1){
 
         // Finding if q is true in the window
         auto itr_q = node->l2.begin();
         std::advance(itr_q, node->t1);
-        int qt = -1; // time when q became true between t1 and t2.
-        for (int i = node->t1; i <= node->t2; i++)
+        int index = node->t1;
+        while (index < node->l2.size() && index <= node->t2)
         {
-            if (*itr_q)
-            {
-                qt = i;
+            /* code */
+            if(*itr_q){
+                qt = index;
                 break;
             }
+
+            index++;
             itr_q++;
         }
-        // No q in the window [t1, t2]
-        if (qt == -1)
-            verdict = 0;
 
-        // there is a q in the window [t1, t2]
-        auto itr_p = node->l1.begin();
-        for (int i = 0; i < qt; i++)
-        { // check if p is true for all time before q_time.
-            if (!(*itr_p))
-                verdict = 0;
-            itr_p++;
+        // q never occured in [t1, t2]
+        if(qt==-1 && node->l2.size() > node->t2){
+            verdict = 0;
+            node->l1.pop_front();
+            node->l2.pop_front();
+            return verdict;
         }
-        // Removing the front from both the queues
-        node->l1.pop_front();
-        node->l2.pop_front();
-        return verdict;
+
+        index = 0;
+        auto itr_p = node->l1.begin();
+
+        while(index < node->l1.size() && index < qt)
+        {
+
+            if(!(*itr_p)){
+                verdict = 0;
+                node->l1.pop_front();
+                node->l2.pop_front();
+                return verdict;
+            }
+            itr_p++;
+            index++;
+        }
+        
+        if(index == qt){ // true verdict
+            verdict = 1;
+            node->l1.pop_front();
+            node->l2.pop_front();
+            return verdict;
+        }
+
     }
+
     return -1;
 }
 
