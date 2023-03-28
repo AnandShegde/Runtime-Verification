@@ -286,29 +286,6 @@ int mtree::process_until(mnode *node)
 // Globally
 int mtree::process_globally(mnode *node)
 {
-    if(node->l1.size() > node->t1){
-        int verdict = 0, index = node->t1;
-        auto itr = node->l1.begin();
-        std::advance(itr, node->t1);
-        while(index < node->l1.size() && index <= node->t2){
-            if (*itr){
-                verdict = 1;
-                break;
-            }
-            itr++;
-        }
-        if(verdict){
-            node->l1.pop_front();
-            return verdict;
-        }
-    }
-    
-    if(node->l1.size() > node->t2){
-        node->l1.pop_front();
-        return 0;
-    }
-    return -1;
-
 
     if(node->l1.size()>node->t1){
         int verdict = 1;
