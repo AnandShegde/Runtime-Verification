@@ -10,7 +10,7 @@ struct mnode
     mnode* parent;
 
     int t1, t2;
-    std::list<int> l1, l2;
+    std::list<bool> l1, l2;
 
     mnode(){
         this->value = EMPTY_NODE;
@@ -47,5 +47,17 @@ class mtree
         std::vector<int> get_times(std::string &expression, int start, int end);
         void print(mnode* root);
         int evaluate(std::unordered_map<std::string, bool> ,mnode* node);
+        int get_value(mnode* node);
+
+        int process_and(mnode* node);
+        int process_or(mnode* node);
+        int process_implies(mnode* node);
+        int process_not(mnode* node);
+
+        int process_until(mnode* node);
+        int process_next(mnode* node);
+        int process_globally(mnode* node);
+        int process_finally(mnode* node);
+
 
 };
