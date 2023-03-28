@@ -114,8 +114,12 @@ int mtree::evaluate(std::unordered_map<std::string, bool> prop_val, mnode *node)
 
     // propostion
     if (node->type == (types)empty)
-    {
-        return prop_val[node->proposition];
+    {   
+        if(prop_val.find(node->proposition) != prop_val.end())
+            return prop_val[node->proposition];
+
+        //After reading all the inputs in the file
+        return -1;
     }
 
     // binary
@@ -141,10 +145,8 @@ int mtree::evaluate(std::unordered_map<std::string, bool> prop_val, mnode *node)
         // next
         int next = evaluate(prop_val, node->next);
 
-        if (next == -1)
-            return -1;
-
-        node->l1.push_back(next);
+        if (next >= 0)
+            node->l1.push_back(next);
 
         return get_value(node);
     }
@@ -235,7 +237,9 @@ int mtree::process_next(mnode *node)
 {
     if (node->l1.size() > 1)
     {
-        int verdict = !node->l1.front();
+        auto itr = node->l1.begin();
+        itr++;
+        int verdict = *itr;
         node->l1.pop_front();
         return verdict;
     }
