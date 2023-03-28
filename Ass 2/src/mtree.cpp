@@ -11,6 +11,7 @@ mtree::~mtree()
 {
 }
 
+// Changing time convention (to 0 index) here [1, 5] ---> [0, 4]
 // Size of the returned vector is 3, {t1, t2, start of next '(' bracket of child}
 // takes the expression starting from the opening square bracket
 std::vector<int> mtree::get_times(std::string &expression, int start, int end)
@@ -25,12 +26,12 @@ std::vector<int> mtree::get_times(std::string &expression, int start, int end)
     while (expression[cur] != ',')
         cur++;
 
-    times[0] = std::stoi(expression.substr(start + 1, cur - start - 1)); // skipping square bracket
+    times[0] = std::stoi(expression.substr(start + 1, cur - start - 1)) -1 ; // skipping square bracket
 
     start = cur;
     while (expression[cur] != ']')
         cur++;
-    times[1] = std::stoi(expression.substr(start + 1, cur - start - 1)); // skipping comma
+    times[1] = std::stoi(expression.substr(start + 1, cur - start - 1)) -1; // skipping comma
     times[2] = cur + 1;
 
     return times;
