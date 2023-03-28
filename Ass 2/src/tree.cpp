@@ -118,7 +118,7 @@ void tree::remove_H_E(std::string &property){
 
         if(property[i]=='E'||property[i]=='H'){
             //changing the operator Et -> F[0,t]
-            temp += property[i] == 'H' ? "G[0," : "F[0,";
+            temp += property[i] == 'H' ? "G[1," : "F[1,";
             std::string number = "";
             
             i++;
