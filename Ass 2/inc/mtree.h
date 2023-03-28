@@ -46,5 +46,6 @@ class mtree
         mnode* deserialize(std::string &expression, int start, int end);
         std::vector<int> get_times(std::string &expression, int start, int end);
         void print(mnode* root);
+        int evaluate(std::unordered_map<std::string, bool> ,mnode* node);
 
 };

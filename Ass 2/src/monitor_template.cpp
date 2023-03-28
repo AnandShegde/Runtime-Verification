@@ -64,14 +64,13 @@ int main(int argc, char* argv[]){
     getline(inputFile,line);
     get_index(u_map, line, prop_val);
 
-
-    
-    // while(getline(inputFile, line)){
-    //     update_val(u_map, line, prop_val);
-    //     output = evaluate(prop_val); // Replace with the expression got from the evaluate parse tree
-    //     outputString = output ? "1\n" : "0\n";
-    //     outputFile << outputString;
-    // }
+    while(getline(inputFile, line)){
+        update_val(u_map, line, prop_val);
+        output = tree->evaluate(prop_val, tree->root); // Replace with the expression got from the evaluate parse tree
+        if(output == -1) continue;
+        outputString = output == 1 ? "1\n" : "0\n";
+        outputFile << outputString;
+    }
     inputFile.close();
     outputFile.close();
     return 0;

@@ -98,4 +98,21 @@ mnode* mtree::deserialize(std::string &expression, int start, int end){
     }
     return node;
 }
+
+// 0: false 1:true -1: don't know.
+int mtree::evaluate(std::unordered_map<std::string, bool> prop_val, mnode* node){
+    
+    //propostion
+    if(node->type == (types)empty){
+        return prop_val[node->proposition];
+    }
+
+    //binary
+    if(node->type == (types)binary){
+        int left = evaluate(prop_val, node->left);
+        int right = evaluate(prop_val, node->right);
+        
+    }
+    //unary
+}
     
