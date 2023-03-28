@@ -310,23 +310,26 @@ int mtree::process_globally(mnode *node)
 //Finally
 int mtree::process_finally(mnode *node)
 {
-    if (node->l1.size() > node->t2)
-    {
-        int verdict = 0;
+    if(node->l1.size() > node->t1){
+        int verdict = 0, index = node->t1;
         auto itr = node->l1.begin();
         std::advance(itr, node->t1);
-
-        for (int i = node->t1; i <= node->t2; i++)
-        {
+        while(index < node->l1.size() && index <= node->t2){
             if (*itr){
                 verdict = 1;
                 break;
-            }  
+            }
             itr++;
         }
-        // Removing the front from the queue
+        if(verdict){
+            node->l1.pop_front();
+            return verdict;
+        }
+    }
+    
+    if(node->l1.size() > node->t2){
         node->l1.pop_front();
-        return verdict;
+        return 0;
     }
     return -1;
 }
