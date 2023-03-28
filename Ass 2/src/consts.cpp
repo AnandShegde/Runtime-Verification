@@ -34,7 +34,7 @@ types get_type(char ch){
 
 int get_precendence(char ch){
 
-    std::string prec = "!XFG^v>U";
+    std::string prec = "!XFGU^v>";
     for(int i=0;i<prec.length();i++){
         if(prec[i]==ch) return 100 - i;
     }
