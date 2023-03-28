@@ -71,6 +71,18 @@ int main(int argc, char* argv[]){
         outputString = output == 1 ? "1\n" : "0\n";
         outputFile << outputString;
     }
+    
+    //Evaluating remaining inputs in monitor after clearing the leaf nodes
+    //We should not evaluate them again
+    prop_val.clear();
+    output = tree->evaluate(prop_val, tree->root);
+    while(output != -1){
+        outputString = output == 1 ? "1\n" : "0\n";
+        outputFile << outputString;
+        //repeating until monitor gives no output
+        output = tree->evaluate(prop_val, tree->root);
+    }
+
     inputFile.close();
     outputFile.close();
     return 0;
