@@ -1,7 +1,7 @@
 #include<iostream>
 #include <fstream>
 #include<unordered_map>
-#include<../inc/mtree.h>
+#include"../inc/mtree.h"
 
 std::string get_expression();
 //getting index for the propostion
